@@ -1,0 +1,532 @@
+# 🏥 Sistema de Agendamento de Consultas Médicas
+
+Sistema completo para gerenciamento de consultas médicas com perfis de paciente, médico e administrador.
+
+## 📋 Índice
+
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias](#tecnologias)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Uso](#uso)
+- [API Endpoints](#api-endpoints)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## ✨ Funcionalidades
+
+### 👤 **Paciente**
+- ✅ Cadastro e login
+- ✅ Escolher especialidade médica
+- ✅ Selecionar médico
+- ✅ Visualizar horários disponíveis
+- ✅ Agendar consultas
+- ✅ Visualizar histórico de consultas
+- ✅ Cancelar consultas
+
+### 👨‍⚕️ **Médico**
+- ✅ Visualizar agenda de consultas
+- ✅ Confirmar consultas agendadas
+- ✅ Marcar consultas como concluídas
+- ✅ Cancelar consultas
+- ✅ Ver informações dos pacientes
+
+### 🔧 **Administrador**
+- ✅ Cadastrar especialidades médicas
+- ✅ Cadastrar médicos e pacientes
+- ✅ Vincular médicos a especialidades
+- ✅ Gerenciar usuários
+- ✅ Visualizar estatísticas do sistema
+
+---
+
+## 🛠️ Tecnologias
+
+### Backend
+- PHP 7.4+
+- MySQL 5.7+
+- PDO para conexão segura com banco de dados
+
+### Frontend
+- HTML5
+- CSS3 (com variáveis CSS e Grid/Flexbox)
+- JavaScript ES6+ (Vanilla)
+
+### Servidor
+- Apache 2.4+
+- XAMPP / WAMP / LAMP
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+medical-appointment-system/
+│
+├── backend/
+│   ├── config/
+│   │   └── database.php          # Configuração do banco de dados
+│   │
+│   ├── api/
+│   │   ├── login.php              # Endpoint de login
+│   │   ├── register.php           # Endpoint de registro
+│   │   ├── especialidades.php     # CRUD de especialidades
+│   │   ├── medicos.php            # Listagem de médicos
+│   │   ├── disponibilidades.php   # Horários disponíveis
+│   │   ├── consultas.php          # CRUD de consultas
+│   │   └── admin.php              # Funções administrativas
+│   │
+│   └── database.sql               # Script de criação do banco
+│
+└── frontend/
+    ├── assets/
+    │   ├── css/
+    │   │   └── style.css          # Estilos globais
+    │   └── js/
+    │       └── app.js             # Funções JavaScript
+    │
+    ├── index.html                 # Página inicial
+    ├── login.html                 # Página de login
+    ├── register.html              # Página de cadastro
+    ├── paciente-dashboard.html    # Dashboard do paciente
+    ├── medico-dashboard.html      # Dashboard do médico
+    └── admin-dashboard.html       # Dashboard administrativo
+```
+
+---
+
+## 🚀 Instalação
+
+### 1. Pré-requisitos
+
+- XAMPP, WAMP ou servidor similar instalado
+- Navegador web moderno (Chrome, Firefox, Edge)
+- Editor de código (VS Code recomendado)
+
+### 2. Download e Configuração
+
+```bash
+# 1. Clone ou baixe o projeto
+# 2. Coloque a pasta no diretório do servidor
+
+# Para XAMPP (Windows):
+C:\xampp\htdocs\medical-appointment-system\
+
+# Para XAMPP (Linux):
+/opt/lampp/htdocs/medical-appointment-system/
+
+# Para WAMP:
+C:\wamp64\www\medical-appointment-system\
+```
+
+### 3. Configurar Banco de Dados
+
+#### Opção A: Via phpMyAdmin
+
+1. Acesse: `http://localhost/phpmyadmin`
+2. Clique em "Novo" para criar um banco de dados
+3. Nome: `sistema_consultas`
+4. Codificação: `utf8mb4_general_ci`
+5. Vá para a aba "SQL"
+6. Cole o conteúdo do arquivo `backend/database.sql`
+7. Clique em "Executar"
+
+#### Opção B: Via Linha de Comando
+
+```bash
+# Entre no MySQL
+mysql -u root -p
+
+# Execute os comandos:
+CREATE DATABASE sistema_consultas;
+USE sistema_consultas;
+SOURCE /caminho/para/backend/database.sql;
+```
+
+### 4. Configurar Conexão com Banco
+
+Edite `backend/config/database.php`:
+
+```php
+private $host = "localhost";
+private $db_name = "sistema_consultas";
+private $username = "root";          // Seu usuário MySQL
+private $password = "";              // Sua senha MySQL
+```
+
+### 5. Configurar URL da API
+
+Edite `frontend/assets/js/app.js` (linha 1):
+
+```javascript
+const API_URL = 'http://localhost/medical-appointment-system/backend/api';
+```
+
+**Ajuste conforme sua configuração:**
+- Se usar porta diferente: `http://localhost:8080/...`
+- Se usar domínio local: `http://meusite.local/...`
+
+---
+
+## ⚙️ Configuração
+
+### Estrutura do Banco de Dados
+
+#### Tabela: `users`
+```sql
+- id (INT, PK, AUTO_INCREMENT)
+- nome (VARCHAR)
+- email (VARCHAR, UNIQUE)
+- senha (VARCHAR) # Hash bcrypt
+- tipo (ENUM: 'paciente', 'medico', 'admin')
+- telefone (VARCHAR)
+- created_at (TIMESTAMP)
+```
+
+#### Tabela: `especialidades`
+```sql
+- id (INT, PK, AUTO_INCREMENT)
+- nome (VARCHAR)
+- descricao (TEXT)
+```
+
+#### Tabela: `medicos_especialidades`
+```sql
+- id (INT, PK, AUTO_INCREMENT)
+- medico_id (INT, FK → users.id)
+- especialidade_id (INT, FK → especialidades.id)
+```
+
+#### Tabela: `disponibilidades`
+```sql
+- id (INT, PK, AUTO_INCREMENT)
+- medico_id (INT, FK → users.id)
+- dia_semana (ENUM)
+- hora_inicio (TIME)
+- hora_fim (TIME)
+```
+
+#### Tabela: `consultas`
+```sql
+- id (INT, PK, AUTO_INCREMENT)
+- paciente_id (INT, FK → users.id)
+- medico_id (INT, FK → users.id)
+- data_consulta (DATE)
+- hora_consulta (TIME)
+- status (ENUM)
+- observacoes (TEXT)
+- created_at (TIMESTAMP)
+```
+
+### Usuário Admin Padrão
+
+```
+Email: admin@sistema.com
+Senha: admin123
+```
+
+**⚠️ IMPORTANTE:** Altere esta senha após o primeiro login!
+
+---
+
+## 💻 Uso
+
+### 1. Iniciar o Servidor
+
+**XAMPP:**
+- Abra o XAMPP Control Panel
+- Inicie Apache e MySQL
+- Acesse: `http://localhost/medical-appointment-system/frontend/index.html`
+
+**WAMP:**
+- Inicie o WAMP Server
+- Acesse: `http://localhost/medical-appointment-system/frontend/index.html`
+
+### 2. Primeiro Acesso
+
+#### Como Administrador:
+1. Acesse `login.html`
+2. Use as credenciais: `admin@sistema.com` / `admin123`
+3. Cadastre especialidades
+4. Cadastre médicos e vincule às especialidades
+
+#### Como Paciente:
+1. Acesse `register.html`
+2. Preencha o formulário
+3. Selecione tipo "Paciente"
+4. Faça login
+5. Agende uma consulta
+
+#### Como Médico:
+1. Admin deve cadastrar o médico
+2. Faça login com suas credenciais
+3. Visualize e gerencie sua agenda
+
+---
+
+## 🔌 API Endpoints
+
+### Autenticação
+
+#### `POST /api/login.php`
+Realiza login no sistema.
+
+**Request:**
+```json
+{
+  "email": "usuario@email.com",
+  "senha": "senha123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "user": {
+    "id": 1,
+    "nome": "Nome do Usuário",
+    "email": "usuario@email.com",
+    "tipo": "paciente"
+  }
+}
+```
+
+#### `POST /api/register.php`
+Cadastra novo usuário.
+
+**Request:**
+```json
+{
+  "nome": "Nome Completo",
+  "email": "email@example.com",
+  "senha": "senha123",
+  "telefone": "(11) 99999-9999",
+  "tipo": "paciente"
+}
+```
+
+### Especialidades
+
+#### `GET /api/especialidades.php`
+Lista todas as especialidades.
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "nome": "Cardiologia",
+    "descricao": "Especialidade médica..."
+  }
+]
+```
+
+#### `POST /api/especialidades.php`
+Cria nova especialidade (admin).
+
+**Request:**
+```json
+{
+  "nome": "Pediatria",
+  "descricao": "Especialidade dedicada..."
+}
+```
+
+### Médicos
+
+#### `GET /api/medicos.php?especialidade_id=1`
+Lista médicos por especialidade.
+
+**Response:**
+```json
+[
+  {
+    "id": 2,
+    "nome": "Dr. João Silva",
+    "email": "joao@email.com",
+    "especialidade": "Cardiologia"
+  }
+]
+```
+
+### Consultas
+
+#### `GET /api/consultas.php?user_id=1&tipo=paciente`
+Lista consultas do usuário.
+
+#### `POST /api/consultas.php`
+Agenda nova consulta.
+
+**Request:**
+```json
+{
+  "paciente_id": 1,
+  "medico_id": 2,
+  "data_consulta": "2024-12-15",
+  "hora_consulta": "14:00:00",
+  "observacoes": "Dor no peito"
+}
+```
+
+#### `PUT /api/consultas.php`
+Atualiza status da consulta.
+
+**Request:**
+```json
+{
+  "id": 1,
+  "status": "confirmada"
+}
+```
+
+#### `DELETE /api/consultas.php?id=1`
+Cancela consulta.
+
+---
+
+## 🐛 Troubleshooting
+
+### Problema: Erro de Conexão com o Banco
+
+**Solução:**
+1. Verifique se MySQL está rodando
+2. Confirme credenciais em `database.php`
+3. Teste a conexão:
+```bash
+mysql -u root -p
+USE sistema_consultas;
+SHOW TABLES;
+```
+
+### Problema: CORS Error
+
+**Solução:**
+Adicione no início de cada arquivo PHP:
+```php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Headers: Content-Type');
+```
+
+### Problema: Senhas não funcionam
+
+**Solução:**
+Gerar novo hash de senha:
+```php
+<?php
+echo password_hash('suasenha', PASSWORD_DEFAULT);
+?>
+```
+
+### Problema: Não mostra horários disponíveis
+
+**Solução:**
+1. Verifique se o médico tem disponibilidades cadastradas
+2. Insira manualmente no banco:
+```sql
+INSERT INTO disponibilidades (medico_id, dia_semana, hora_inicio, hora_fim)
+VALUES (2, 'segunda', '08:00:00', '17:00:00');
+```
+
+### Problema: 404 Not Found
+
+**Solução:**
+1. Verifique se Apache está rodando
+2. Confirme o caminho correto:
+```
+http://localhost/medical-appointment-system/frontend/index.html
+```
+3. Verifique permissões da pasta (Linux):
+```bash
+chmod -R 755 /opt/lampp/htdocs/medical-appointment-system
+```
+
+---
+
+## 📊 Fluxo de Uso
+
+```
+1. Admin cadastra especialidades
+   ↓
+2. Admin cadastra médicos
+   ↓
+3. Admin vincula médico → especialidade
+   ↓
+4. Médico define disponibilidade (via banco ou API)
+   ↓
+5. Paciente se registra
+   ↓
+6. Paciente agenda consulta
+   ↓
+7. Médico confirma consulta
+   ↓
+8. Médico conclui consulta
+```
+
+---
+
+## 🔒 Segurança
+
+### Implementado:
+✅ Hash de senhas com bcrypt
+✅ PDO com prepared statements (proteção SQL Injection)
+✅ Validação de entrada
+✅ Sessões seguras
+
+### Para Produção (Recomendações):
+- [ ] Implementar HTTPS
+- [ ] Adicionar tokens CSRF
+- [ ] Implementar JWT para autenticação
+- [ ] Rate limiting em APIs
+- [ ] Logs de auditoria
+- [ ] Validação mais rigorosa
+- [ ] Sanitização de inputs
+- [ ] Backup automático do banco
+
+---
+
+## 📱 Responsividade
+
+O sistema é totalmente responsivo e funciona em:
+- 💻 Desktop (1920px+)
+- 💻 Laptop (1366px)
+- 📱 Tablet (768px)
+- 📱 Mobile (320px+)
+
+---
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
+3. Commit: `git commit -m 'Adiciona nova funcionalidade'`
+4. Push: `git push origin feature/nova-funcionalidade`
+5. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+Este projeto é livre para uso educacional e pessoal.
+
+---
+
+## 👨‍💻 Autor
+
+cleiton langa
+
+---
+
+## 📞 Suporte
+
+Para dúvidas e problemas:
+1. Consulte a seção [Troubleshooting](#troubleshooting) ou cleytonlanga10@gmail.com
+2. Verifique os logs do Apache/MySQL
+3. Revise as configurações do `database.php`
+
+---
+
+**🎉 Projeto concluído e funcional!**
