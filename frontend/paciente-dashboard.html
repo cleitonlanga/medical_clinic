@@ -1,0 +1,99 @@
+<!-- paciente-dashboard.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/paciente-dashboard.css">
+    <title>Painel do Paciente — Agendar Consultas</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 Painel do Paciente</h1>
+            <div>
+                <span id="userName" style="margin-right:14px; font-weight:700;"></span>
+                <button class="btn btn-secondary" onclick="logout()">Sair</button>
+            </div>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <div class="card">
+            <h2 style="margin-bottom:12px;">Agendar Consulta</h2>
+            <div class="grid">
+                <div>
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label>Especialidade</label>
+                        <select id="selectEspecialidade">
+                            <option value="">Carregando...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label>Médico</label>
+                        <select id="selectMedico">
+                            <option value="">Selecione uma especialidade</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label>Data</label>
+                        <input type="date" id="inputData" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Horários disponíveis</label>
+                        <div id="timesContainer" class="times">
+                            <div style="color:#777">Selecione médico e data</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:14px;">
+                        <label>Observações (opcional)</label>
+                        <textarea id="observacoes" rows="3" placeholder="Informe sintomas ou motivo"></textarea>
+                    </div>
+
+                    <div style="margin-top:12px;">
+                        <button id="btnAgendar" class="btn btn-primary">Agendar Consulta</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="padding:12px;">
+                        <h3 style="margin-bottom:10px;">Resumo</h3>
+                        <div><strong>Médico:</strong> <span id="resMedico">—</span></div>
+                        <div><strong>Data:</strong> <span id="resData">—</span></div>
+                        <div><strong>Horário:</strong> <span id="resHora">—</span></div>
+                        <div style="margin-top:8px;"><button id="btnClearSelection" class="btn" style="background:#eee;">Limpar seleção</button></div>
+                    </div>
+                    <div style="margin-top:12px;" class="card">
+                        <h3 style="margin-bottom:10px;">Dicas</h3>
+                        <ul style="padding-left:18px; color:#555;">
+                            <li>Escolha especialidade para listar médicos.</li>
+                            <li>Selecione um médico e uma data para ver horários disponíveis.</li>
+                            <li>Horários já ocupados não são exibidos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📜 Histórico de Consultas</h2>
+            <table id="historyTable">
+                <thead>
+                    <tr>
+                        <th>Data</th><th>Hora</th><th>Médico</th><th>Status</th><th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    <tr><td colspan="5" style="text-align:center;">Carregando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="assets/js/paciente-dashboard.js"></script>
+</body>
+</html>

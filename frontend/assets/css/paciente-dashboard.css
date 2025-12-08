@@ -1,0 +1,146 @@
+/* Estilo baseado no admin-dashboard (cores e espaçamento similares) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+  padding: 20px;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+h1 {
+  color: #333;
+  font-size: 20px;
+}
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+.btn-secondary {
+  background: #6c757d;
+  color: #fff;
+}
+.card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #555;
+  font-weight: 500;
+}
+select,
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  font-size: 14px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  align-items: start;
+}
+.times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.time {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+.time.selected {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+  text-align: left;
+  font-size: 14px;
+}
+.badge {
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 12px;
+}
+.status-agendada {
+  background: #ffeeba;
+  color: #856404;
+}
+.status-confirmada {
+  background: #cce5ff;
+  color: #004085;
+}
+.status-concluida {
+  background: #d4edda;
+  color: #155724;
+}
+.status-cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: none;
+}
+.alert-success {
+  background: #d4edda;
+  color: #155724;
+}
+.alert-error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

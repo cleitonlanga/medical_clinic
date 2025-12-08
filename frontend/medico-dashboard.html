@@ -1,0 +1,37 @@
+<!-- medico-dashboard.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/medico-dashboard.css">
+    <title>Painel do Médico — Agenda</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Painel do Médico</h1>
+            <div>
+                <span id="userName" style="margin-right:12px;font-weight:700"></span>
+                <button class="btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <div class="card" style="margin-bottom:18px;">
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+                <label>Filtrar data:</label>
+                <input type="date" id="filterDate" />
+                <button id="btnLoad" class="btn btn-primary">Carregar Agenda</button>
+                <button id="btnToday" class="btn" style="background:#eee;">Hoje</button>
+            </div>
+        </div>
+
+        <div id="agendaContainer"></div>
+
+    </div>
+
+    <script src="assets/js/medico-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <title>Medical Appointment — Entrar / Cadastrar</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Bem-vindo — Sistema de Agendamento</h1>
+      <div id="alertBox" class="alert"></div>
+
+      <div class="columns">
+        <div class="card">
+          <h2>Entrar</h2>
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="seu@exemplo.com" />
+          <label>Senha</label>
+          <input type="password" id="loginSenha" placeholder="••••••••" />
+          <label>Entrar como</label>
+          <select id="loginTipo">
+            <option value="paciente">Paciente</option>
+            <option value="medico">Médico</option>
+            <option value="admin">Admin</option>
+          </select>
+          <div style="display: flex; gap: 8px; margin-top: 8px">
+            <button id="btnLogin" class="btn btn-primary">Entrar</button>
+            <button id="btnGuest" class="btn" style="background: #eee">
+              Entrar como convidado
+            </button>
+          </div>
+          <p class="note">
+            Obs: As credenciais reais devem ser validadas pelo backend (endpoint
+            /auth.php). Aqui assumimos que o backend expõe um endpoint de
+            autenticação.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Cadastrar Conta (Paciente)</h2>
+          <label>Nome</label>
+          <input type="text" id="regNome" placeholder="Seu nome completo" />
+          <label>Email</label>
+          <input type="email" id="regEmail" placeholder="seu@exemplo.com" />
+          <label>Senha</label>
+          <input type="password" id="regSenha" placeholder="••••••" />
+          <label>Telefone</label>
+          <input type="text" id="regTelefone" placeholder="(+258) 849 123 456" />
+          <div style="margin-top: 8px">
+            <button id="btnRegister" class="btn btn-secondary">
+              Criar conta
+            </button>
+          </div>
+          <p class="note">
+            Observação: O backend deve expor um endpoint de registro (ex:
+            /register.php). Se não existir, crie-o utilizando a tabela users do
+            banco de dados.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/index.js"></script>
+  </body>
+</html>
