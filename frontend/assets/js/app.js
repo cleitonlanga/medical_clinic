@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost/medical-appointment-system/backend/api';
+const API_URL = 'http://localhost:88/medical_clinic=\/backend/api';
 
 // Armazenar usuário no localStorage
 function saveUser(user) {

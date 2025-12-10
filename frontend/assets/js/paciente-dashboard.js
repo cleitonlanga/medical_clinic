@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/medical-appointment-system/backend/api";
+const API_URL = "http://localhost:88/medical_clinic/backend/api";
 const user = (() => {
   try {
     return JSON.parse(localStorage.getItem("user"));

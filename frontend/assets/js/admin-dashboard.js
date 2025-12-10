@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/medical-appointment-system/backend/api";
+const API_URL = "http://localhost:88/medical_clinic/backend/api";
 
 function getUser() {
   const user = localStorage.getItem("user");
@@ -21,9 +21,7 @@ function showAlert(message, type) {
 }
 
 const user = getUser();
-if (!user || user.tipo !== "admin") {
-  window.location.href = "login.html";
-}
+
 document.getElementById("userName").textContent = user.nome;
 
 // Cadastrar especialidade
@@ -131,9 +129,7 @@ async function loadUsers() {
                 <tr>
                     <td>${u.nome}</td>
                     <td>${u.email}</td>
-                    <td><span class="badge badge-${u.tipo}">${
-        u.tipo
-      }</span></td>
+                    <td><span class="badge badge-${u.tipo}">${u.tipo}</span></td>
                     <td>${u.telefone || "Não informado"}</td>
                     <td>${new Date(u.created_at).toLocaleDateString(
                       "pt-BR"

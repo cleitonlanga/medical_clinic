@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost/medical-appointment-system/backend/api';
+const API_URL = 'http://localhost:88/medical_clinic/backend/api';
 
         function showAlert(message, type) {
             const alertBox = document.getElementById('alertBox');
