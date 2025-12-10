@@ -1,24 +1,23 @@
-# Usando imagem oficial do PHP com Apache
 FROM php:8.3.6-apache
 
-# Instalar extensões comuns (ajuste conforme seu projeto)
+# Instalar extensões comuns
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Ativar mod_rewrite (necessário para frameworks e URLs amigáveis)
+# Ativar mod_rewrite
 RUN a2enmod rewrite
 
-# Definir diretório de trabalho
+# Copiar backend para o DocumentRoot do Apache
 WORKDIR /var/www/html
+COPY backend/api/ .      
 
-# Copiar todo o código para dentro do container
-COPY . .
+# Configurar Apache para apontar para o backend/api
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html|' /etc/apache2/sites-available/000-default.conf
 
-# Expor a porta que o Apache vai usar
+# Permitir .htaccess se necessário
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# Expor a porta 10000
 EXPOSE 10000
 
-# Configurar Apache para rodar na porta 10000
-RUN sed -i 's/80/10000/' /etc/apache2/ports.conf \
-    && sed -i 's/:80>/:10000>/' /etc/apache2/sites-available/000-default.conf
-
-# Comando padrão para rodar o Apache em foreground
+# Iniciar Apache em foreground
 CMD ["apache2-foreground"]
