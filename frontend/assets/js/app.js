@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:88/medical_clinic=\/backend/api';
+const API_URL = 'https://medical-clinic-zmwf.onrender.com';
 
 // Armazenar usuário no localStorage
 function saveUser(user) {

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:88/medical_clinic/backend/api';
+const API_URL = 'https://medical-clinic-zmwf.onrender.com';
 
         function showAlert(message, type) {
             const alertBox = document.getElementById('alertBox');
