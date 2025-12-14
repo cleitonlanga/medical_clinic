@@ -1,4 +1,4 @@
-const API_URL = "https://medical-clinic-b8lv.onrender.com/api";
+const API_URL = "https://medical-clinic-qwnh.onrender.com/api";
 const user = (() => {
   try {
     return JSON.parse(localStorage.getItem("user"));
