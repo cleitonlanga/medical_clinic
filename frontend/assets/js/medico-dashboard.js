@@ -1,4 +1,4 @@
-const API_URL = 'https://medical-clinic-zmwf.onrender.com';
+const API_URL = 'https://medical-clinic-b8lv.onrender.com';
         const user = (() => {
             try { return JSON.parse(localStorage.getItem('user')); } catch(e) { return null; }
         })();
