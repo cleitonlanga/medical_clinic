@@ -1,31 +1,33 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "sistema_consultas";
-    private $username = "root";
-    private $password = "";
     private $conn;
 
     public function getConnection() {
         $this->conn = null;
-        try {
-            $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
-                $this->username,
-                $this->password
-            );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn->exec("set names utf8mb4");
 
-        } catch(PDOException $e) {
-            error_log("Erro de conexão: " . $e->getMessage());
-            echo json_encode(["error" => "Erro na conexão com o banco de dados"]);
-            return null;
+        try {
+            $host = getenv('DB_HOST');
+            $db   = getenv('DB_NAME');
+            $user = getenv('DB_USER');
+            $pass = getenv('DB_PASS');
+            $port = getenv('DB_PORT') ?: 3306;
+
+            $this->conn = new PDO(
+                "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4",
+                $user,
+                $pass,
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ]
+            );
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["error" => "Erro de conexão com o banco"]);
+            exit;
         }
+
         return $this->conn;
     }
 }
-
-?>
-
-
