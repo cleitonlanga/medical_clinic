@@ -1,4 +1,4 @@
-const API_URL = 'https://medical-clinic-b8lv.onrender.com/public'; 
+const API_URL = 'https://medical-clinic-b8lv.onrender.com/api'; 
 
         function showAlert(message, type) {
             const alertBox = document.getElementById('alertBox');
@@ -21,7 +21,7 @@ const API_URL = 'https://medical-clinic-b8lv.onrender.com/public';
             const senha = document.getElementById('senha').value;
             
             try {
-                const response = await fetch(`${API_URL}/login.php`, {
+                const response = await fetch(`${API_URL}/auth.php`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, senha })
