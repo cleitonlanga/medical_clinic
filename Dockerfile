@@ -5,7 +5,7 @@ FROM php:8.2-apache
 RUN docker-php-ext-install pdo pdo_mysql
 
 # Habilitar mod_rewrite (útil se futuramente precisar de URLs amigáveis)
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 
 # Copiar o backend para o diretório do Apache
 COPY . /var/www/html/
