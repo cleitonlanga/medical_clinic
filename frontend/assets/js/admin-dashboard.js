@@ -5,6 +5,18 @@ function getUser() {
   return user ? JSON.parse(user) : null;
 }
 
+function requireAuth() {
+  if (!user) {
+    window.location.href = "login.html";
+  } else if (user.tipo !== "admin") {
+    // redirect to correct dashboard if wrong role
+    if (user.tipo === "medico") window.location.href = "medico-dashboard.html";
+    if (user.tipo === "paciente") window.location.href = "paciente-dashboard.html";
+  }
+  document.getElementById('userName').textContent = user?.nome || '';
+}
+
+
 function logout() {
   localStorage.removeItem("user");
   window.location.href = "login.html";
@@ -20,7 +32,10 @@ function showAlert(message, type) {
   }, 5000);
 }
 
+
+
 const user = getUser();
+requireAuth();
 
 document.getElementById("userName").textContent = user.nome;
 
