@@ -12,7 +12,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 
 # Copiar o backend para o diretório do Apache
-COPY . /var/www/html/
+COPY . /var/www/html/backend/
 
 # Definir permissões corretas
 RUN chown -R www-data:www-data /var/www/html/backend/public \
