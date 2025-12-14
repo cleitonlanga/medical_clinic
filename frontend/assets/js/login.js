@@ -1,4 +1,4 @@
-const API_URL = 'https://medical-clinic-b8lv.onrender.com'; 
+const API_URL = 'https://medical-clinic-b8lv.onrender.com/public'; 
 
         function showAlert(message, type) {
             const alertBox = document.getElementById('alertBox');

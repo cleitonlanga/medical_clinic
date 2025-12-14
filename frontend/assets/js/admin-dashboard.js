@@ -1,4 +1,4 @@
-const API_URL = "https://medical-clinic-b8lv.onrender.com";
+const API_URL = "https://medical-clinic-b8lv.onrender.com/api";
 
 function getUser() {
   const user = localStorage.getItem("user");
