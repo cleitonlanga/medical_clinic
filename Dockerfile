@@ -1,23 +1,28 @@
-FROM php:8.3-apache
+# Use imagem oficial PHP com Apache
+FROM php:8.2-apache
 
+# Instalar extensões necessárias
 RUN docker-php-ext-install pdo pdo_mysql
+
+# Habilitar mod_rewrite (útil se futuramente precisar de URLs amigáveis)
 RUN a2enmod rewrite
 
-ENV APACHE_DOCUMENT_ROOT /var/www/html/backend/public
+# Copiar o backend para o diretório do Apache
+COPY . /var/www/html/
 
-# Substitui doc root nos configs Apache
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
-    /etc/apache2/sites-available/*.conf \
-    /etc/apache2/apache2.conf
+# Definir permissões corretas
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 
-# Ajusta Apache para usar porta dinâmica do Render
-RUN sed -ri 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf \
- && sed -ri 's/:80/:${PORT}/g' /etc/apache2/sites-available/000-default.conf
+# Configurar php.ini mínimo (opcional, mas ajuda em dev)
+RUN echo "display_errors=On\nerror_reporting=E_ALL\nupload_max_filesize=10M\npost_max_size=10M" > /usr/local/etc/php/conf.d/custom.ini
 
-COPY . /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+# Definir a porta que o Apache vai escutar
+EXPOSE 80
 
-# Expõe porta (boa prática)
-EXPOSE ${PORT}
+# CORS padrão para todas as rotas (útil para seu frontend no Render)
+RUN echo "Header set Access-Control-Allow-Origin \"*\"\nHeader set Access-Control-Allow-Methods \"GET, POST, PUT, DELETE, OPTIONS\"\nHeader set Access-Control-Allow-Headers \"Content-Type, Authorization\"" > /etc/apache2/conf-available/cors.conf \
+    && a2enconf cors
 
+# Comando para iniciar o Apache
 CMD ["apache2-foreground"]
